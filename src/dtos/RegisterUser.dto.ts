@@ -1,7 +1,7 @@
-export type RegisterUserParams = {
+export class RegisterUSerDto {
   first_name: string;
   last_name: string;
   role: string;
   phone_number: string;
   password: string;
-};
+}

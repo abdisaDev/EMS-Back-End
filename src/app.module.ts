@@ -7,17 +7,21 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.development.local',
+      envFilePath: '/home/abdiza/EMS/EMS-Back-End/.env.development.local',
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
+      host:
+        process.env.MODE === 'LOCAL'
+          ? process.env.LOCAL_ADDRESS
+          : process.env.PUBLIC_ADDRESS,
+      port: Number(process.env.PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [User],
       synchronize: true,
+      autoLoadEntities: true,
     }),
     UsersModule,
   ],

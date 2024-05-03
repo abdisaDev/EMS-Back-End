@@ -1,14 +1,14 @@
+import { IsEmail, IsEmpty, IsStrongPassword } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsEmail, IsEmpty, IsStrongPassword } from 'class-validator';
 
-@Entity({ name: 'users' })
-export class User {
+@Entity({ name: 'guards' })
+export class Guard {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,11 +22,11 @@ export class User {
 
   @Column()
   @IsEmpty()
-  phone_number: string;
+  role: string;
 
   @Column()
   @IsEmpty()
-  role: string;
+  phone_number: string;
 
   @Column()
   @IsEmpty()

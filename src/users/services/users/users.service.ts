@@ -10,10 +10,16 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  fetchUsers() {}
+  fetchUsers() {
+    return this.userRepository.find();
+  }
 
   registerUser(userDetails: RegisterUserParams) {
     const newUser = this.userRepository.create({ ...userDetails });
     return this.userRepository.save(newUser);
+  }
+
+  deleteUser(id: number) {
+    return this.userRepository.delete({ id });
   }
 }

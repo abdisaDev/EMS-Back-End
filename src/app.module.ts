@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './typeorm/entities/users/User';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { Guard } from './typeorm/entities/users/Guard';
 
 @Module({
   imports: [
@@ -15,11 +16,11 @@ import { ConfigModule } from '@nestjs/config';
         process.env.MODE === 'LOCAL'
           ? process.env.LOCAL_ADDRESS
           : process.env.PUBLIC_ADDRESS,
-      port: Number(process.env.PORT),
+      port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Guard],
       synchronize: true,
       autoLoadEntities: true,
     }),

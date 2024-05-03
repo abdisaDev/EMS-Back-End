@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '/home/abdiza/EMS/EMS-Back-End/.env.development.local',
+      envFilePath: '.env.development.local',
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',

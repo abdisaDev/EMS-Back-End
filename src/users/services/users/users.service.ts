@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/entities/User';
-import { RegisterUserParams } from 'src/utils/types';
+import { User } from 'src/typeorm/entities/users/User';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -12,14 +11,5 @@ export class UsersService {
 
   fetchUsers() {
     return this.userRepository.find();
-  }
-
-  registerUser(userDetails: RegisterUserParams) {
-    const newUser = this.userRepository.create({ ...userDetails });
-    return this.userRepository.save(newUser);
-  }
-
-  deleteUser(id: number) {
-    return this.userRepository.delete({ id });
   }
 }

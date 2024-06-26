@@ -5,3 +5,15 @@ export type RegisterUserParams = {
   phone_number: string;
   password: string;
 };
+
+export enum Category {
+  CAR = 'car',
+  COMPUTER = 'computer',
+}
+
+export type RegisterUserItemParams = {
+  id: string;
+  model: string;
+  color: string;
+  category: Category;
+};

@@ -13,7 +13,7 @@ import { Guard } from './typeorm/entities/users/Guard';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host:
-        process.env.MODE === 'LOCAL'
+        process.env.MODE === 'dev'
           ? process.env.LOCAL_ADDRESS
           : process.env.PUBLIC_ADDRESS,
       port: Number(process.env.DB_PORT),

@@ -29,7 +29,7 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
     @Body() registerUserItemDto: RegisterUserItemDto,
   ) {
-    await this.userService.registerUserItem(id, registerUserItemDto);
-    return 'Item successfuly added';
+    this.userService.registerUserItem(id, registerUserItemDto);
+    return 'Item Successfuly Added';
   }
 }

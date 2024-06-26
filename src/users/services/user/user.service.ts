@@ -29,12 +29,14 @@ export class UserService {
 
   async registerUserItem(id: number, registerUserItem: RegisterUserItemParams) {
     const user = await this.userRepository.findOneBy({ id });
-
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
     }
 
-    const newItem = this.itemRepository.create(registerUserItem);
-    return await this.itemRepository.save(newItem);
+    const newItem = this.itemRepository.create({
+      ...registerUserItem,
+      user,
+    });
+    return this.itemRepository.save(newItem);
   }
 }

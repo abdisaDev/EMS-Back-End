@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { IsEmail, IsEmpty, IsStrongPassword } from 'class-validator';
 import { Item } from '../items/Item';
+import { Profile } from './Profile';
 
 @Entity({ name: 'users' })
 export class User {
@@ -45,6 +48,10 @@ export class User {
 
   @OneToMany(() => Item, (item) => item.user)
   items: Item[];
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 
   @CreateDateColumn({ nullable: true })
   created_at: Date;

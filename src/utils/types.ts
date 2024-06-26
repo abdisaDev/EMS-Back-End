@@ -17,3 +17,9 @@ export type RegisterUserItemParams = {
   color: string;
   category: Category;
 };
+
+export type ProfileUserParams = {
+  gate_entry_time: Date;
+  gate_exit_time: Date;
+  compound_stay_time: Date;
+};

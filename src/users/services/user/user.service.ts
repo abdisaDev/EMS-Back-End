@@ -19,12 +19,15 @@ export class UserService {
     @InjectRepository(Profile) private profileRepository: Repository<Profile>,
   ) {}
 
-  getUser(id: number) {
-    return this.userRepository.findOne({
+  async getUser(id: number) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...rest } = await this.userRepository.findOne({
       where: {
         id,
       },
+      relations: ['items'],
     });
+    return rest;
   }
 
   findUserByPhonenumber(phone_number: string) {

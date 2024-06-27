@@ -24,7 +24,6 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [User, Guard, Item, Profile],
-      synchronize: true,
       autoLoadEntities: true,
     }),
     UsersModule,

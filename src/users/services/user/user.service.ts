@@ -9,6 +9,7 @@ import {
   RegisterUserParams,
 } from 'src/utils/types';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -26,11 +27,22 @@ export class UserService {
     });
   }
 
-  registerUser(registerPayload: RegisterUserParams) {
-    const userInstance = this.userRepository.create(registerPayload);
+  findUserByPhonenumber(phone_number: string) {
+    return this.userRepository.findOneBy({ phone_number });
+  }
 
-    this.userRepository.save(userInstance);
-    return 'User Successfully Registered!';
+  async registerUser(registerPayload: RegisterUserParams) {
+    const { password, ...rest } = registerPayload;
+    const salt = await bcrypt.genSalt(5);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const userInstance = this.userRepository.create({
+      password: hashedPassword,
+      ...rest,
+    });
+    console.log(userInstance);
+
+    return await this.userRepository.save(userInstance);
   }
 
   async registerUserItem(id: number, registerUserItem: RegisterUserItemParams) {

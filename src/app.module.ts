@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Guard } from './typeorm/entities/users/Guard';
 import { Item } from './typeorm/entities/items/Item';
 import { Profile } from './typeorm/entities/users/Profile';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { Profile } from './typeorm/entities/users/Profile';
       autoLoadEntities: true,
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

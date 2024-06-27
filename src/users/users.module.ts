@@ -13,5 +13,6 @@ import { Profile } from 'src/typeorm/entities/users/Profile';
   imports: [TypeOrmModule.forFeature([User, Guard, Item, Profile])],
   controllers: [UsersController, UserController],
   providers: [UsersService, UserService],
+  exports: [UserService],
 })
 export class UsersModule {}

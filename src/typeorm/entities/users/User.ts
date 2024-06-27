@@ -25,7 +25,7 @@ export class User {
   @IsEmpty()
   last_name: string;
 
-  @Column()
+  @Column({ unique: true })
   @IsEmpty()
   phone_number: string;
 

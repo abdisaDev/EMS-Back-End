@@ -23,3 +23,8 @@ export type ProfileUserParams = {
   gate_exit_time: Date;
   compound_stay_time: Date;
 };
+
+export type SignInParams = {
+  phone_number: string;
+  password: string;
+};

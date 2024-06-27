@@ -20,9 +20,10 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
-  @Post('/create')
-  registerUser(@Body() registerPayload: RegisterUserDto) {
-    return this.userService.registerUser(registerPayload);
+  @Post('/register')
+  async registerUser(@Body() registerPayload: RegisterUserDto) {
+    await this.userService.registerUser(registerPayload);
+    return 'User Successfully Registered!';
   }
 
   @Post(':id/registerItem')

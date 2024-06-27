@@ -12,10 +12,11 @@ export enum Category {
 }
 
 export type RegisterUserItemParams = {
-  id: string;
   model: string;
   color: string;
+  serial_number: string;
   category: Category;
+  description: string;
 };
 
 export type ProfileUserParams = {

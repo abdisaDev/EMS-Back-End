@@ -3,8 +3,5 @@ export class RegisterUserDto {
   last_name: string;
   role: string;
   phone_number: string;
-  creator: string;
-  email?: string;
-  token?: string;
   password: string;
 }

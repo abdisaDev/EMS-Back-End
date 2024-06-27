@@ -40,7 +40,6 @@ export class UserService {
       password: hashedPassword,
       ...rest,
     });
-    console.log(userInstance);
 
     return await this.userRepository.save(userInstance);
   }
@@ -66,7 +65,6 @@ export class UserService {
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
     }
-    console.log(user);
     return user.items;
   }
 

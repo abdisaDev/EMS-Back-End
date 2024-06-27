@@ -8,7 +8,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { IsEmail, IsEmpty, IsStrongPassword } from 'class-validator';
+import { IsEmpty, IsStrongPassword } from 'class-validator';
 import { Item } from '../items/Item';
 import { Profile } from './Profile';
 
@@ -34,17 +34,8 @@ export class User {
   role: string;
 
   @Column()
-  @IsEmpty()
-  @IsEmail()
-  email: string;
-
-  @Column()
   @IsStrongPassword()
   password: string;
-
-  @Column()
-  @IsEmpty()
-  creator: string;
 
   @OneToMany(() => Item, (item) => item.user)
   items: Item[];

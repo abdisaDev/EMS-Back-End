@@ -4,8 +4,13 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-import { IsEmail, IsEmpty, IsStrongPassword } from 'class-validator';
+import { IsEmpty, IsStrongPassword } from 'class-validator';
+import { Item } from '../items/Item';
+import { Profile } from './Profile';
 
 @Entity({ name: 'users' })
 export class User {
@@ -20,7 +25,7 @@ export class User {
   @IsEmpty()
   last_name: string;
 
-  @Column()
+  @Column({ unique: true })
   @IsEmpty()
   phone_number: string;
 
@@ -29,17 +34,15 @@ export class User {
   role: string;
 
   @Column()
-  @IsEmpty()
-  @IsEmail()
-  email: string;
-
-  @Column()
   @IsStrongPassword()
   password: string;
 
-  @Column()
-  @IsEmpty()
-  creator: string;
+  @OneToMany(() => Item, (item) => item.user)
+  items: Item[];
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 
   @CreateDateColumn({ nullable: true })
   created_at: Date;

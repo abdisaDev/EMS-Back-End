@@ -9,7 +9,12 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  fetchUsers() {
-    return this.userRepository.find();
+  async fetchUsers() {
+    const allUsers = await this.userRepository.find({ relations: ['items'] });
+    return allUsers.map((user) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...rest } = user;
+      return rest;
+    });
   }
 }

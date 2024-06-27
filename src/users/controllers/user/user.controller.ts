@@ -6,6 +6,8 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
+import { RegisterUserItemDto } from 'src/dtos/item/RegisterItem.dto';
+import { ProfileUserDto } from 'src/dtos/user/ProfileUser.dto';
 import { RegisterUserDto } from 'src/dtos/user/RegisterUser.dto';
 import { UserService } from 'src/users/services/user/user.service';
 
@@ -18,8 +20,40 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
-  @Post('/create')
-  registerUser(@Body() registerPayload: RegisterUserDto) {
-    return this.userService.registerUser(registerPayload);
+  @Post('/register')
+  async registerUser(@Body() registerPayload: RegisterUserDto) {
+    await this.userService.registerUser(registerPayload);
+    return 'User Successfully Registered!';
+  }
+
+  @Post(':id/registerItem')
+  async registerUserItem(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() registerUserItemDto: RegisterUserItemDto,
+  ) {
+    const items = await this.userService.registerUserItem(
+      id,
+      registerUserItemDto,
+    );
+    console.log(items);
+    return 'Item Successfuly Added';
+  }
+
+  @Get(':id/items')
+  async fetchUsetItems(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.fetchRegisterdItem(id);
+  }
+
+  @Get(':id/profile')
+  async userProfile(@Param('id', ParseIntPipe) id: number) {
+    return await this.userService.userProfile(id);
+  }
+
+  @Post(':id/profile')
+  async createUserProfile(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() userProfilePayload: ProfileUserDto,
+  ) {
+    return this.userService.createUserProfile(id, userProfilePayload);
   }
 }

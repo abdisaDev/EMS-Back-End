@@ -31,8 +31,17 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
     @Body() registerUserItemDto: RegisterUserItemDto,
   ) {
-    this.userService.registerUserItem(id, registerUserItemDto);
+    const items = await this.userService.registerUserItem(
+      id,
+      registerUserItemDto,
+    );
+    console.log(items);
     return 'Item Successfuly Added';
+  }
+
+  @Get(':id/items')
+  async fetchUsetItems(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.fetchRegisterdItem(id);
   }
 
   @Get(':id/profile')

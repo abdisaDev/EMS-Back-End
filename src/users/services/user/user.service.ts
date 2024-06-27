@@ -58,6 +58,18 @@ export class UserService {
     return this.itemRepository.save(newItem);
   }
 
+  async fetchRegisterdItem(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['items'],
+    });
+    if (!user) {
+      throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
+    }
+    console.log(user);
+    return user.items;
+  }
+
   async userProfile(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },

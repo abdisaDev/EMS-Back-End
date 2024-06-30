@@ -14,19 +14,13 @@ export class OtpService {
           mode: 'devices',
           device: process.env.SMS_GATEWAY_DEVICE_ID,
           phone: getOtpParams.phone_number,
-          message: `Hello this message is sent from EMS.\n------------------\n{{otp}} is your verification code (otp).\nThis token is valid for 5 mins.`,
+          message: `Hello this message is sent from EMS.\n----------------------\n{{otp}} is your verification code (otp).\nThis token is valid for 5 mins.`,
         },
       })
       .then((res) => {
         return {
           status: res.status,
           message: res.data.message,
-        };
-      })
-      .catch((err) => {
-        return {
-          status: err.status,
-          message: err.data.message,
         };
       });
   }
@@ -42,12 +36,6 @@ export class OtpService {
         return {
           status: res.status,
           message: res.data.message,
-        };
-      })
-      .catch((err) => {
-        return {
-          status: err.status,
-          message: err.data.message,
         };
       });
   }

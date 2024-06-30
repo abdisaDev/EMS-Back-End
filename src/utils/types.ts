@@ -29,3 +29,11 @@ export type SignInParams = {
   phone_number: string;
   password: string;
 };
+
+export type GetOtpParams = {
+  phone_number: string;
+};
+
+export type VerifyOtpParams = {
+  otp: string;
+};

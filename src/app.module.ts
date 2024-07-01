@@ -7,6 +7,8 @@ import { Guard } from './typeorm/entities/users/Guard';
 import { Item } from './typeorm/entities/items/Item';
 import { Profile } from './typeorm/entities/users/Profile';
 import { AuthModule } from './auth/auth.module';
+import { OtpController } from './otp/controller/otp/otp.controller';
+import { OtpService } from './otp/service/otp/otp.service';
 
 @Module({
   imports: [
@@ -24,12 +26,13 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [User, Guard, Item, Profile],
+      synchronize: true,
       autoLoadEntities: true,
     }),
     UsersModule,
     AuthModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [OtpController],
+  providers: [OtpService],
 })
 export class AppModule {}

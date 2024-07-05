@@ -18,8 +18,9 @@ export class OtpService {
         },
       })
       .then((res) => {
+        console.log(res.data);
         return {
-          status: res.status,
+          status: res.data.status,
           message: res.data.message,
         };
       });

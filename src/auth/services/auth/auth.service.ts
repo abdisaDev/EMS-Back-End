@@ -1,8 +1,13 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from 'src/users/services/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { SignInParams } from 'src/utils/types';
 import { JwtService } from '@nestjs/jwt';
+import { HttpStatusCode } from 'axios';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +21,9 @@ export class AuthService {
       signInParam.phone_number,
     );
 
-    if (!user || !(await bcrypt.compare(signInParam.password, user.password))) {
+    if (!user) {
+      throw new HttpException('User Not Found!', HttpStatusCode.NotFound);
+    } else if (!(await bcrypt.compare(signInParam.password, user.password))) {
       throw new UnauthorizedException();
     }
     const payload = { sub: user.id, phone_number: user.phone_number };

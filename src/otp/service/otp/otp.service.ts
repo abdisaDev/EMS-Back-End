@@ -1,10 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { HttpException, Injectable } from '@nestjs/common';
+
+import axios, { HttpStatusCode } from 'axios';
+
+import { UserService } from 'src/users/services/user/user.service';
 import { GetOtpParams, VerifyOtpParams } from 'src/utils/types';
 
 @Injectable()
 export class OtpService {
+  constructor(private userService: UserService) {}
+
   async getOtp(getOtpParams: GetOtpParams) {
+    const isPhoneNumberRegistered =
+      await this.userService.findUserByPhonenumber(
+        getOtpParams.phone_number.replace('+251', '0'),
+      );
+
+    if (isPhoneNumberRegistered) {
+      throw new HttpException(
+        'The Phone Number is already in use. Please Contact the adminstrator.',
+        HttpStatusCode.Conflict,
+      );
+    }
     return await axios
       .get('https://hahu.io/api/send/otp', {
         params: {
@@ -18,7 +34,6 @@ export class OtpService {
         },
       })
       .then((res) => {
-        console.log(res.data);
         return {
           status: res.data.status,
           message: res.data.message,

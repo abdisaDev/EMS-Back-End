@@ -38,7 +38,6 @@ export class UserService {
     const { password, ...rest } = registerPayload;
     const salt = await bcrypt.genSalt(5);
     const hashedPassword = await bcrypt.hash(password, salt);
-
     const userInstance = this.userRepository.create({
       password: hashedPassword,
       ...rest,
@@ -49,6 +48,7 @@ export class UserService {
 
   async registerUserItem(id: number, registerUserItem: RegisterUserItemParams) {
     const user = await this.userRepository.findOneBy({ id });
+
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
     }
@@ -76,7 +76,6 @@ export class UserService {
       where: { id },
       relations: ['profile'],
     });
-    console.log(user);
 
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);

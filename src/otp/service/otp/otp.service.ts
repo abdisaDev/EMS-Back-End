@@ -33,10 +33,18 @@ export class OtpService {
           message: `Hello this message is sent from EMS.\n----------------------\n{{otp}} is your verification code (otp).\nThis token is valid for 5 mins.`,
         },
       })
-      .then((res) => {
+      .then(async (response) => {
+        const { message, status } = await response.data;
         return {
-          status: res.data.status,
-          message: res.data.message,
+          status,
+          message,
+        };
+      })
+      .catch(async (error) => {
+        const { status, message } = await error.response.data;
+        return {
+          status,
+          message,
         };
       });
   }

@@ -36,7 +36,7 @@ export class AuthService {
     };
   }
 
-  async verifyToken(token: string, secret) {
+  async verifyToken(token: string, secret: string | Buffer) {
     return await this.jwtService.verifyAsync(token, { secret });
   }
 }

@@ -4,13 +4,15 @@ import { Item } from 'src/typeorm/entities/items/Item';
 import { Profile } from 'src/typeorm/entities/users/Profile';
 import { User } from 'src/typeorm/entities/users/User';
 import {
+  Category,
   ProfileUserParams,
   RegisterUserItemParams,
   RegisterUserParams,
 } from 'src/utils/types';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-
+import { HttpStatusCode } from 'axios';
+import { isEqual } from 'lodash';
 @Injectable()
 export class UserService {
   constructor(
@@ -94,5 +96,34 @@ export class UserService {
     const savedProfile = await this.profileRepository.save(newProfile);
     user.profile = savedProfile;
     return this.userRepository.save(user);
+  }
+
+  async verifyUserItems(
+    id: number,
+    itemParams: {
+      model: string;
+      color: string;
+      serial_number: string;
+      category: Category;
+      description: string;
+    }[],
+  ) {
+    const items = await this.fetchRegisterdItem(id);
+    if (!items) {
+      throw new HttpException('User Not Found.', HttpStatusCode.NotFound);
+    }
+    // console.log(itemParams, 'dsa param');
+
+    const allItems = items.map((item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...all } = item;
+      return all;
+    });
+
+    if (isEqual(allItems, itemParams)) {
+      return { status: true, message: 'The item lists match perfectly!' };
+    }
+
+    return { status: false, message: 'The item lists are not identical.' };
   }
 }

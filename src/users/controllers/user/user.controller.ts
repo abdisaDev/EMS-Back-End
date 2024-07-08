@@ -10,7 +10,6 @@ import { RegisterUserItemDto } from 'src/dtos/item/RegisterItem.dto';
 import { ProfileUserDto } from 'src/dtos/user/ProfileUser.dto';
 import { RegisterUserDto } from 'src/dtos/user/RegisterUser.dto';
 import { UserService } from 'src/users/services/user/user.service';
-
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -55,5 +54,13 @@ export class UserController {
     @Body() userProfilePayload: ProfileUserDto,
   ) {
     return this.userService.createUserProfile(id, userProfilePayload);
+  }
+
+  @Post(':id/verify-items')
+  async verifyUserItems(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() itemLists: RegisterUserItemDto[],
+  ) {
+    return await this.userService.verifyUserItems(id, itemLists);
   }
 }
